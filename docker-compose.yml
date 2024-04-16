@@ -1,0 +1,38 @@
+version: "3"
+
+services: 
+  app:
+    build: .
+    container_name: mongodb-trainer
+    restart: always
+    tty: true
+    networks: 
+      - mongodb-trainer_bridge
+    ports: 
+      - 9000:3000
+      - 9229:9229
+    volumes: 
+      - .:/usr/src/app
+    command: yarn start:dev
+    environment:
+      NODE_ENV: development
+    depends_on: 
+      - db
+
+  db:
+    image: mongo:latest
+    container_name: mongodb-trainer_db
+    networks:
+      - mongodb-trainer_bridge
+    volumes:
+      - ./db-mongo:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: mongodb-trainer_db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+networks: 
+  mongodb-trainer_bridge:
+    driver: bridge
