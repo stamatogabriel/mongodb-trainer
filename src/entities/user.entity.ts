@@ -1,13 +1,32 @@
-import { Schema, Document } from 'mongoose';
-import { Roles } from '../types/Roles';
+import { Schema, Document, Types } from 'mongoose';
 import { User } from '../types/User';
 import { HmacSHA512 } from 'crypto-js';
+import { v4 as uuid } from 'uuid';
+
+// export interface User {
+//   _id?: string;
+//   name: string;
+//   email: string;
+//   phone: string;
+//   password: string;
+//   passwordResetToken?: string;
+//   passwordResetExpires?: Date;
+// }
 
 export const UserSchema = new Schema({
-
+  id: { type: String },
+  parentId: [{ type: Types.ObjectId, ref: 'User' }],
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  phone: { type: String, required: true },
+  password: { type: String, required: true },
+  passwordResetToken: { type: String },
+  passwordResetExpires: { type: Date },
 });
 
-UserSchema.pre<IUserEntity>(['save'], function (next) {
+UserSchema.pre<IUserEntity>('save', function (next) {
+  this.id = uuid();
+
   if (this.password) {
     const hashPassword = HmacSHA512(
       this.password,
@@ -31,4 +50,6 @@ UserSchema.pre<any>('findOneAndUpdate', function (next) {
   next();
 });
 
-export interface IUserEntity extends Omit<User, '_id'>, Document {}
+export interface IUserEntity extends Omit<User, '_id'>, Document {
+  id: string;
+}

@@ -21,8 +21,6 @@ import { AuthModule } from './core/auth/auth.module';
       useFactory: (database: DatabaseConnectionService) => {
         return <MongooseModuleOptions>{
           uri: database.get(),
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
         };
       },
       inject: [DatabaseConnectionService],

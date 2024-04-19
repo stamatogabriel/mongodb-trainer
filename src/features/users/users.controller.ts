@@ -26,4 +26,34 @@ import { RedefinePassDto } from './dto/redefine-pass.dto copy';
 @Controller('users')
 export class UsersController {
   constructor(private readonly user: UserService) {}
+
+  @Post()
+  async create(@Body() createUserDto: CreateUserDto) {
+    return this.user.create(createUserDto);
+  }
+
+  @Get()
+  async findAll(@Query() query: QueryDto) {
+    return this.user.findAll(query);
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    return this.user.findById(id);
+  }
+
+  @Get('uuid/:uuid')
+  async findByUUid(@Param('uuid') uuid: string) {
+    return this.user.findByUUid(uuid);
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.user.update(id, updateUserDto);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    return this.user.delete(id);
+  }
 }

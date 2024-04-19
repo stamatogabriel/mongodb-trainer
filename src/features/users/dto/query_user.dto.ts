@@ -24,11 +24,6 @@ export class QueryDto {
   name?: string;
 
   @IsOptional()
-  @IsString()
-  @ApiProperty({ required: false })
-  cpf?: string;
-
-  @IsOptional()
   @IsEmail()
   @ApiProperty({ required: false })
   email?: string;

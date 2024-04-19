@@ -11,4 +11,34 @@ import { RedefinePassDto } from './dto/redefine-pass.dto copy';
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UsersRepository) {}
+
+  async create(createUserDto: CreateUserDto) {
+    const user = await this.userRepository.create(createUserDto);
+
+    if (!user) {
+      throw new HttpException('User not created', HttpStatus.BAD_REQUEST);
+    }
+
+    return user;
+  }
+
+  async findAll(query: QueryDto) {
+    return await this.userRepository.findAll(query);
+  }
+
+  async findById(id: string) {
+    return await this.userRepository.findById(id);
+  }
+
+  async findByUUid(uuid: string) {
+    return await this.userRepository.findByUUid(uuid);
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    return await this.userRepository.update(id, updateUserDto);
+  }
+
+  async delete(id: string) {
+    return await this.userRepository.delete(id);
+  }
 }

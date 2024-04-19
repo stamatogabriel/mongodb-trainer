@@ -24,12 +24,12 @@ export class CreateUserDto {
   @ApiProperty()
   password: string;
 
-  @IsNotEmpty()
-  @ApiProperty({ type: AddressDto })
-  address: AddressDto;
+  // @IsNotEmpty()
+  // @ApiProperty({ type: AddressDto })
+  // address: AddressDto;
 
-  @IsArray()
-  @IsNotEmpty()
-  @ApiProperty({ enum: Roles, type: 'string', isArray: true })
-  roles: Roles[];
+  // @IsArray()
+  // @IsNotEmpty()
+  // @ApiProperty({ enum: Roles, type: 'string', isArray: true })
+  // roles: Roles[];
 }
